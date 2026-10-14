@@ -1,17 +1,19 @@
-import express from "express";
+import dotenv from "dotenv";
+import OpenAI from "openai";
+import { createApp } from "./app.js";
 
-const app = express();
-const port = process.env.PORT || 3000;
+dotenv.config({ path: new URL("../.env", import.meta.url) });
 
-app.use(express.json());
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("OPENAI_API_KEY is missing from backend/.env");
+}
 
-app.get("/", (req, res) => {
-  res.send("Hello from the API!");
-});
-
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", message: "Backend API is connected" });
-});
+const port = Number(process.env.PORT) || 3000;
+const model = process.env.OPENAI_CHAT_MODEL || "gpt-4.1-mini";
+const speechModel = process.env.OPENAI_TTS_MODEL || "gpt-4o-mini-tts";
+const speechVoice = process.env.OPENAI_TTS_VOICE || "marin";
+const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const app = createApp({ openaiClient, model, speechModel, speechVoice });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
