@@ -5,6 +5,7 @@ const ChatForm = ({
   setChatHistory,
   generateChatbotResponse,
   disabled,
+  characterName,
 }) => {
   const inputRef = useRef();
 
@@ -22,20 +23,20 @@ const ChatForm = ({
 
   return (
     <form className="chat-form" onSubmit={handleFormSubmit}>
-      <span className="prompt-glyph" aria-hidden="true">›_</span>
+      <span className="prompt-glyph material-symbols-rounded" aria-hidden="true">chat_bubble</span>
       <input
         ref={inputRef}
         type="text"
-        placeholder={disabled ? "Nexa is processing..." : "Send a message to Nexa..."}
+        placeholder={disabled ? `${characterName} is thinking...` : `Message ${characterName}...`}
         className="chat-input"
-        aria-label="Message Nexa"
+        aria-label={`Message ${characterName}`}
         autoComplete="off"
         disabled={disabled}
         required
       />
       <button className="send-button" type="submit" disabled={disabled} aria-label="Send message">
-        <span>{disabled ? "WAIT" : "SEND"}</span>
-        <span className="material-symbols-rounded" aria-hidden="true">north_east</span>
+        <span>{disabled ? "Wait" : "Send"}</span>
+        <span className="material-symbols-rounded" aria-hidden="true">arrow_upward</span>
       </button>
     </form>
   );

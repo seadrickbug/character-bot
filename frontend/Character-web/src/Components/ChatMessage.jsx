@@ -1,6 +1,6 @@
 import ChatbotIcon from "./ChatBotIcon";
 
-const ChatMessage = ({ chat, onSpeak }) => {
+const ChatMessage = ({ chat, onSpeak, characterName }) => {
   const isBot = chat.role === "model";
   const isThinking = isBot && chat.message === "Thinking...";
 
@@ -14,13 +14,12 @@ const ChatMessage = ({ chat, onSpeak }) => {
 
       <div className="message-content">
         <div className="message-meta">
-          <span>{isBot ? "NEXA//01" : "YOU//LOCAL"}</span>
-          <i>{isBot ? "SYNTHETIC MIND" : "OPERATOR"}</i>
+          <span>{isBot ? characterName : "You"}</span>
         </div>
 
         <div className={`message-bubble ${isThinking ? "is-thinking" : ""}`}>
           {isThinking ? (
-            <div className="typing-indicator" aria-label="Nexa is thinking">
+            <div className="typing-indicator" aria-label={`${characterName} is thinking`}>
               <span /><span /><span />
             </div>
           ) : (
